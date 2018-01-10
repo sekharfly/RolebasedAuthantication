@@ -43,7 +43,7 @@ public class UsersController {
 	}
 
 	// update user by Id
-	@RequestMapping(method = RequestMethod.PUT, value = "/auth/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.PUT, value = "/auth/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> updateUserById(@RequestBody UserModel userModel, @PathVariable int id)
 			throws JSONException {
 		userModel.setId(id);
@@ -90,7 +90,7 @@ public class UsersController {
 		JSONObject jsonObject = new JSONObject(body);
 		ResponseEntity<String> cpassword = userService.cpassword(jsonObject);
 		return cpassword;
-		// return null;
+		
 
 	}
 
