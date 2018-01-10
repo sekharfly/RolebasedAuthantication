@@ -23,6 +23,7 @@ public class UserService {
 
 	JSONArray jsonArray = new JSONArray();
 
+	//create user
 	public ResponseEntity<String> createUser(UserModel userModel) throws JSONException {
 		JSONObject objectToJson = null;
 		ResponseEntity<String> responseEntity = null;
@@ -40,7 +41,7 @@ public class UserService {
 		return responseEntity;
 
 	}
-
+// get all users
 	public ResponseEntity<String> getAllUsers() throws JSONException {
 		Iterable<UserModel> findAll = userRepository.findAll();
 		JSONObject objectToJsonArray = userService.objectToJsonArray(findAll);
@@ -50,6 +51,7 @@ public class UserService {
 
 	}
 
+	//update user by id
 	public ResponseEntity<String> updateUser(UserModel userModel) throws JSONException {
 		JSONObject objectToJson = null;
 		ResponseEntity<String> responseEntity = null;
@@ -68,6 +70,7 @@ public class UserService {
 		return responseEntity;
 	}
 
+	//delete user by id
 	public ResponseEntity<String> deleteUser(int id) throws JSONException {
 		JSONObject json = null;
 		try {
@@ -84,6 +87,7 @@ public class UserService {
 
 	}
 
+	//get user by id
 	public ResponseEntity<String> specificUser(int id) throws JSONException {
 		UserModel findOne = userRepository.findOne(id);
 		JSONObject objectToJson = null;
@@ -96,6 +100,7 @@ public class UserService {
 		}
 	}
 
+	// authorization
 	public ResponseEntity<String> specificUserByEmail(JSONObject body) throws JSONException {
 		String email = body.getString("email");
 		String password = body.getString("password");
@@ -151,7 +156,7 @@ public class UserService {
 		return jsonObject;
 	}
 
-	// get by mail
+	// get profile by mail
 	public ResponseEntity<String> profileEmail(String email) throws JSONException {
 		// TODO Auto-generated method stub
 		UserModel findByEmail = userRepository.findByEmail(email);
@@ -166,7 +171,7 @@ public class UserService {
 	}
 
 	// change password
-	public ResponseEntity<String> cpassword(JSONObject jsonObject) {
+	public ResponseEntity<String> cpassword(UserModel userModel) {
 		// TODO Auto-generated method stub
 		return null;
 	}
