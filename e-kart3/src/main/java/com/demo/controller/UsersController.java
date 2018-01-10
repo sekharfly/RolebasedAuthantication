@@ -1,6 +1,5 @@
 package com.demo.controller;
 
-
 import javax.websocket.server.PathParam;
 
 import org.apache.log4j.Logger;
@@ -20,29 +19,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.demo.model.UserModel;
 import com.demo.service.UserService;
 
-
 @CrossOrigin(origins = "*")
 @Controller
 @RequestMapping(path = "/ekart")
 public class UsersController {
 	@Autowired
 	private UserService userService;
-	
+
 	final static Logger logger = Logger.getLogger(UsersController.class);
-	
-	//create user
+
+	// create user
 	@RequestMapping(method = RequestMethod.POST, value = "auth/signup", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> addNewUser(@RequestBody UserModel userModel) throws JSONException {
 		ResponseEntity<String> createUser = userService.createUser(userModel);
 		return createUser;
 	}
-	//get all users
+
+	// get all users
 	@RequestMapping(method = RequestMethod.GET, value = "auth/allusers", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getAllUsers() throws JSONException {
 		ResponseEntity<String> allUsers = userService.getAllUsers();
 		return allUsers;
 	}
-	//update user by Id
+
+	// update user by Id
 	@RequestMapping(method = RequestMethod.PUT, value = "/auth/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> updateUserById(@RequestBody UserModel userModel, @PathVariable int id)
 			throws JSONException {
@@ -66,22 +66,32 @@ public class UsersController {
 		return specificUser;
 	}
 
-	//authorization
+	// authorization
 	@RequestMapping(method = RequestMethod.POST, value = "/auth/login", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getUserByEmail(@RequestBody String body) throws JSONException {
 		JSONObject jsonObject = new JSONObject(body);
 		ResponseEntity<String> specificUserByEmail = userService.specificUserByEmail(jsonObject);
 		return specificUserByEmail;
-		
+
 	}
-	
-	//getProfile
-		@RequestMapping(method = RequestMethod.GET, value = "/auth/profile", produces = MediaType.APPLICATION_JSON_VALUE)
-		public ResponseEntity<String> getByEmail(@RequestParam String email) throws JSONException {
-			ResponseEntity<String> profileEmail = userService.profileEmail(email);
-			return profileEmail;
-			// return null;
-			
-		}
-	
+
+	// getProfile
+	@RequestMapping(method = RequestMethod.GET, value = "/auth/profile", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> getByEmail(@RequestParam String email) throws JSONException {
+		ResponseEntity<String> profileEmail = userService.profileEmail(email);
+		return profileEmail;
+		// return null;
+
+	}
+
+	// change password
+	@RequestMapping(method = RequestMethod.POST, value = "/auth/changepassword", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> changePassword(@RequestBody String body) throws JSONException {
+		JSONObject jsonObject = new JSONObject(body);
+		ResponseEntity<String> cpassword = userService.cpassword(jsonObject);
+		return cpassword;
+		// return null;
+
+	}
+
 }
