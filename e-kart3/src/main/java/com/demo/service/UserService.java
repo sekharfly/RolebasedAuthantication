@@ -49,29 +49,25 @@ public class UserService {
 		return responseEntity;
 
 	}
-	
 
 	public ResponseEntity<String> updateUser(UserModel userModel) throws JSONException {
 		JSONObject objectToJson = null;
 		ResponseEntity<String> responseEntity = null;
-		try{
+		try {
 			String mDbytesToString = Utils.MDbytesToString(userModel.getPassword().getBytes());
 			userModel.setPassword(mDbytesToString);
-			userModel.setSalt(mDbytesToString);			
+			userModel.setSalt(mDbytesToString);
 			UserModel save = userRepository.save(userModel);
 			objectToJson = userService.objectToJson(save);
 			responseEntity = new ResponseEntity<String>(objectToJson.toString(), HttpStatus.CREATED);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			responseEntity = Utils.exceptionHandling(e);
 		}
-		
-		//JSONObject json = Utils.getJSON("success");
+
+		// JSONObject json = Utils.getJSON("success");
 		return responseEntity;
 	}
 
-	
-	
 	public ResponseEntity<String> deleteUser(int id) throws JSONException {
 		JSONObject json = null;
 		try {
@@ -108,10 +104,10 @@ public class UserService {
 		Gson gson = new Gson();
 		String json1 = "success fully logged in";
 		String json2 = "password incorrect";
-		
+
 		String json4 = gson.toJson(json1);
 		String json5 = gson.toJson(json2);
-		
+
 		if (findOne == null) {
 			objectToJson = Utils.getJSONError("User doesn't exists");
 			return new ResponseEntity<String>(objectToJson.toString(), HttpStatus.NOT_FOUND);
@@ -121,8 +117,7 @@ public class UserService {
 			if (dbPassword.equals(mDbytesToString)) {
 				objectToJson = Utils.getSuccessJSON(json4);
 				return new ResponseEntity<String>(objectToJson.toString(), HttpStatus.CREATED);
-			}
-			else{
+			} else {
 				objectToJson = Utils.getJSONError(json5);
 				return new ResponseEntity<String>(objectToJson.toString(), HttpStatus.NOT_FOUND);
 			}
@@ -156,6 +151,7 @@ public class UserService {
 		return jsonObject;
 	}
 
+	// get by mail
 	public ResponseEntity<String> profileEmail(String email) throws JSONException {
 		// TODO Auto-generated method stub
 		UserModel findByEmail = userRepository.findByEmail(email);
@@ -168,18 +164,21 @@ public class UserService {
 			return new ResponseEntity<String>(objectToJson.toString(), HttpStatus.OK);
 		}
 	}
+
+	// change password
+	public ResponseEntity<String> cpassword(JSONObject jsonObject) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
-	
-	
 
-	/*
-	 * public void validation(UserModel userModel) throws UserValidation { if
-	 * (userModel.getPassword().length() < 7 && userModel.getPassword().length()
-	 * > 14) { if (userModel.getPassword().length() < 7) { throw new
-	 * UserValidation("password too short"); } else { throw new UserValidation(
-	 * "You have exceed the length"); } }
-	 * 
-	 * }
-	 */
+}
 
+/*
+ * public void validation(UserModel userModel) throws UserValidation { if
+ * (userModel.getPassword().length() < 7 && userModel.getPassword().length() >
+ * 14) { if (userModel.getPassword().length() < 7) { throw new UserValidation(
+ * "password too short"); } else { throw new UserValidation(
+ * "You have exceed the length"); } }
+ * 
+ * }
+ */
