@@ -171,9 +171,22 @@ public class UserService {
 	}
 
 	// change password
-	public ResponseEntity<String> cpassword(UserModel userModel) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<String> cpassword(UserModel userModel) throws JSONException {
+		JSONObject objectToJson = null;
+		ResponseEntity<String> responseEntity = null;
+		try {
+			String mDbytesToString = Utils.MDbytesToString(userModel.getPassword().getBytes());
+			userModel.setPassword(mDbytesToString);
+			userModel.setSalt(mDbytesToString);
+			UserModel save = userRepository.save(userModel);
+			objectToJson = userService.objectToJson(save);
+			responseEntity = new ResponseEntity<String>(objectToJson.toString(), HttpStatus.CREATED);
+		} catch (Exception e) {
+			responseEntity = Utils.exceptionHandling(e);
+		}
+
+		// JSONObject json = Utils.getJSON("success");
+		return responseEntity;
 	}
 
 }
