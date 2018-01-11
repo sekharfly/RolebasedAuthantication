@@ -85,14 +85,14 @@ public class UsersController {
 	}
 
 	// change password
-		
+
 	@RequestMapping(method = RequestMethod.PUT, value = "/auth/changepassword/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> changePassword(@RequestBody UserModel userModel, @PathVariable int id)
 			throws JSONException {
 		userModel.setId(id);
 		userModel.setActive(1);
-		ResponseEntity<String> updateUser = userService.cpassword(userModel);
-		return updateUser;
+		ResponseEntity<String> cpassword = userService.cpassword(userModel);
+		return cpassword;
 	}
-	
+
 }
